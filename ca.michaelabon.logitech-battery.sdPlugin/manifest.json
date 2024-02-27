@@ -1,0 +1,43 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/@elgato/schemas@latest/streamdeck/plugins/manifest.json",
+  "Actions": [
+    {
+      "Icon": "icons/setBatteryAction",
+      "Name": "See Battery",
+      "States": [
+        {
+          "Image": "icons/setBatteryAction"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Tooltip": "Check your Logitech peripherals",
+      "UUID": "ca.michaelabon.logitech-battery.see"
+    }
+  ],
+  "Author": "Michael Abon",
+  "Category": "Logitech Battery",
+  "CategoryIcon": "icons/categoryIcon",
+  "CodePath": "build/streamdeck-logitech-battery.exe",
+  "CodePathMac": "build/streamdeck-logitech-battery",
+  "Description": "See your Logitech accessory battery levels directly from the Stream Deck.",
+  "Icon": "icons/pluginIcon",
+  "Name": "Logitech Battery",
+  "OS": [
+    {
+      "MinimumVersion": "10.11",
+      "Platform": "mac"
+    },
+    {
+      "MinimumVersion": "10",
+      "Platform": "windows"
+    }
+  ],
+  "PropertyInspectorPath": "propertyInspector/pi.html",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.4"
+  },
+  "UUID": "ca.michaelabon.logitech-battery",
+  "URL": "https://github.com/michaelabon/streamdeck-logitech-battery",
+  "Version": "1.1.0"
+}
