@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/ajstarks/svgo"
+	"math"
 	"slices"
 	"sort"
 	"strconv"
@@ -47,10 +48,10 @@ func DrawIcon(batteryStats map[string]BatteryStat) string {
 		}
 
 		if v.IsCharging {
-			canvas.Text(valX, valY, strconv.Itoa(v.Percentage), chargingTextStyle)
+			canvas.Text(valX, valY, strconv.Itoa(int(math.Round(v.Percentage))), chargingTextStyle)
 			drawCharging(canvas, chargingX, iconY)
 		} else {
-			canvas.Text(valX, valY, strconv.Itoa(v.Percentage), textStyle)
+			canvas.Text(valX, valY, strconv.Itoa(int(math.Round(v.Percentage))), textStyle)
 		}
 
 		i++

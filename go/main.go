@@ -72,7 +72,7 @@ func setup(client *streamdeck.Client) {
 	seeBatteryAction.RegisterHandler(
 		streamdeck.WillAppear,
 		func(ctx context.Context, client *streamdeck.Client, event streamdeck.Event) error {
-			ticker := time.NewTicker(3 * time.Second)
+			ticker := time.NewTicker(5 * time.Second)
 			quit = make(chan struct{})
 			go func() {
 				for {
@@ -104,7 +104,7 @@ func setup(client *streamdeck.Client) {
 
 type BatteryStat struct {
 	IsCharging bool
-	Percentage int
+	Percentage float64
 }
 
 func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string) {
