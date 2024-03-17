@@ -33,7 +33,9 @@ func main() {
 
 	ctx := context.Background()
 	if err := run(ctx); err != nil {
-		log.Fatalf("%v\n", err)
+		log.Printf("%v\n", err)
+
+		return
 	}
 }
 
@@ -54,6 +56,8 @@ const (
 	GhubBatteryWarningSection = "warning"
 )
 
+const updateFrequency = 5 * time.Second
+
 func setup(client *streamdeck.Client) {
 	dbFilePath, err := getDbFilepath()
 	if err != nil {
@@ -62,6 +66,7 @@ func setup(client *streamdeck.Client) {
 
 	if _, err := os.Stat(dbFilePath); os.IsNotExist(err) {
 		log.Println("File does not exist", err)
+
 		return
 	}
 
@@ -72,7 +77,7 @@ func setup(client *streamdeck.Client) {
 	seeBatteryAction.RegisterHandler(
 		streamdeck.WillAppear,
 		func(ctx context.Context, client *streamdeck.Client, event streamdeck.Event) error {
-			ticker := time.NewTicker(5 * time.Second)
+			ticker := time.NewTicker(updateFrequency)
 			quit = make(chan struct{})
 			go func() {
 				for {
@@ -81,6 +86,7 @@ func setup(client *streamdeck.Client) {
 						doUpdate(ctx, client, dbFilePath)
 					case <-quit:
 						ticker.Stop()
+
 						return
 					}
 				}
@@ -111,6 +117,7 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 	db, err := sql.Open("sqlite3", dbFilePath)
 	if err != nil {
 		log.Println("unable to open sqlite3 database", err)
+
 		return
 	}
 
@@ -121,6 +128,7 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 		if err = db.Close(); err != nil {
 			log.Println("unable to close database", err)
 		}
+
 		return
 	}
 
@@ -132,10 +140,12 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 		if err = db.Close(); err != nil {
 			log.Println("unable to close database", err)
 		}
+
 		return
 	}
 
 	batteryStats := make(map[string]BatteryStat)
+	expectedBatteryStatsPerLine := 3
 
 	for key, value := range dev {
 		if !strings.HasPrefix(key, "battery") {
@@ -143,7 +153,7 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 		}
 
 		splitName := strings.Split(key, "/")
-		if len(splitName) != 3 {
+		if len(splitName) != expectedBatteryStatsPerLine {
 			continue
 		}
 
@@ -164,6 +174,7 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 			if err = db.Close(); err != nil {
 				log.Println("unable to close database", err)
 			}
+
 			return
 		}
 
@@ -179,11 +190,11 @@ func doUpdate(ctx context.Context, client *streamdeck.Client, dbFilePath string)
 		if err = db.Close(); err != nil {
 			log.Println("unable to close database", err)
 		}
+
 		return
 	}
 
 	if err = db.Close(); err != nil {
 		log.Println("unable to close database", err)
 	}
-	return
 }

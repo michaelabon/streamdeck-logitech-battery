@@ -1,0 +1,36 @@
+---
+run:
+  show-stats: true
+issues:
+  max-same-issues: 10
+linters:
+  enable:
+    - containedctx
+    - contextcheck
+    - dogsled
+    - dupword
+    - durationcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - execinquery
+    - exhaustive
+    - exportloopref
+    - forcetypeassert
+    - gci
+    - gocheckcompilerdirectives
+    - gochecknoglobals
+    - goconst
+    - gocritic
+    - gofumpt
+    - gomnd
+    - gosec
+    - ireturn
+    - nilerr
+    - nilnil
+    - nlreturn
+    - nolintlint
+    - perfsprint
+    - predeclared
+    - reassign
+    - tagalign

@@ -3,12 +3,15 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/ajstarks/svgo"
 	"math"
 	"slices"
 	"sort"
 	"strconv"
+
+	svg "github.com/ajstarks/svgo"
 )
+
+const maxBatteryStatsPerIcon = 3
 
 func DrawIcon(batteryStats map[string]BatteryStat) string {
 	width := 400
@@ -29,21 +32,24 @@ func DrawIcon(batteryStats map[string]BatteryStat) string {
 	for _, k := range keys {
 		v := batteryStats[k]
 
-		if i >= 3 {
+		if i >= maxBatteryStatsPerIcon {
 			break
 		}
 
 		iconX := 20
 		valX := 285
-		iconY := 20 + (120 * i)
-		valY := iconY + 80
+		iconHeight := 120
+		valHeight := 80 // icon Y is its upper corner, text Y is its baseline. Text size is 72px, plus 8 more for comfort
+		iconY := iconX + (iconHeight * i)
+		valY := iconY + valHeight
 		chargingX := 290
 
-		if isMouse(k) {
+		switch {
+		case isMouse(k):
 			drawMouse(canvas, iconX, iconY)
-		} else if isKeyboard(k) {
+		case isKeyboard(k):
 			drawKeyboard(canvas, iconX, iconY)
-		} else if isHeadset(k) {
+		case isHeadset(k):
 			drawHeadset(canvas, iconX, iconY)
 		}
 
@@ -62,7 +68,7 @@ func DrawIcon(batteryStats map[string]BatteryStat) string {
 }
 
 func encodeSvg(svg string) string {
-	return fmt.Sprintf("data:image/svg+xml;charset=utf8,%s", svg)
+	return "data:image/svg+xml;charset=utf8," + svg
 }
 
 func isMouse(label string) bool {
@@ -164,7 +170,7 @@ func drawKeyboard(canvas *svg.SVG, x, y int) {
 func drawCharging(canvas *svg.SVG, x, y int) {
 	textOffset := 30 // Allocated 100px height, but the text is only 72px
 	canvas.Gtransform(fmt.Sprintf("translate(%d, %d)", x, y+textOffset))
-	canvas.Gtransform(fmt.Sprintf("scale(0.72)"))
+	canvas.Gtransform("scale(0.72)")
 	canvas.Path("M 37 0 H 60 L 50 26 L 73 20 L 37 100 L 51 41 L 26 47 Z",
 		"fill: rgb(232, 232, 97); stroke: white; stroke-width: 1px; fill-rule: evenodd;",
 	)
