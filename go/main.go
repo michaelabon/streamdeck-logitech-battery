@@ -106,6 +106,15 @@ func setup(client *streamdeck.Client) {
 			return nil
 		},
 	)
+
+	seeBatteryAction.RegisterHandler(
+		streamdeck.KeyUp,
+		func(ctx context.Context, client *streamdeck.Client, event streamdeck.Event) error {
+			err := launchGHub()
+
+			return err
+		},
+	)
 }
 
 type BatteryStat struct {
