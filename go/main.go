@@ -111,6 +111,9 @@ func setup(client *streamdeck.Client) {
 		streamdeck.KeyUp,
 		func(ctx context.Context, client *streamdeck.Client, event streamdeck.Event) error {
 			err := launchGHub()
+			if err != nil {
+				log.Println("unable to launch G Hub", err)
+			}
 
 			return err
 		},
