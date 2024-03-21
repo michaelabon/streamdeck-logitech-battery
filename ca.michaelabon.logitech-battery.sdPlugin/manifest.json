@@ -19,8 +19,7 @@
       "com.logi.ghub"
     ],
     "windows": [
-      "GHub.exe",
-      "LogitechGHub.exe"
+      "lghub.exe"
     ]
   },
   "Author": "Michael Abon",
