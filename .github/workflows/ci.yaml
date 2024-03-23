@@ -20,6 +20,9 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [windows, darwin]
     steps:
       -
         uses: actions/checkout@v4
@@ -31,6 +34,8 @@ jobs:
       -
         name: golangci-lint
         uses: golangci/golangci-lint-action@v4
+        env:
+          GOOS: ${{ matrix.goos }}
         with:
           version: v1.56.2
           working-directory: "./go"

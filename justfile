@@ -87,7 +87,7 @@ lint:
 
 [macos, linux]
 lint:
-    cd go && golangci-lint run
+    for goos in windows darwin; do (cd go && GOOS=$goos golangci-lint run); done
     golines -w ./go
     find ./go ./{{ PLUGIN }}/icons -type f -name '*.svg' -exec xmllint --pretty 2 --output '{}' '{}' \;
 
