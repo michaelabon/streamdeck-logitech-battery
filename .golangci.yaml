@@ -1,12 +1,14 @@
 ---
-run:
+output:
   show-stats: true
+  sort-results: true
 issues:
   max-same-issues: 10
+  fix: true
 linters:
   enable:
     - containedctx
-    - contextcheck
+    - copyloopvar
     - dogsled
     - dupword
     - durationcheck
@@ -25,6 +27,7 @@ linters:
     - gofumpt
     - gomnd
     - gosec
+    - intrange
     - ireturn
     - nilerr
     - nilnil
