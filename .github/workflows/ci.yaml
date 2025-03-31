@@ -33,11 +33,11 @@ jobs:
           go-version-file: "go/go.mod"
       -
         name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         env:
           GOOS: ${{ matrix.goos }}
         with:
-          version: v1.61.0
+          version: v2.0.2
           working-directory: "./go"
           only-new-issues: true
   build:
