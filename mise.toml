@@ -1,0 +1,3 @@
+[tools]
+go = "go/go.mod"
+golangci-lint = "2.0.2"
