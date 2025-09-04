@@ -1,6 +1,6 @@
 module github.com/michaelabon/streamdeck-battery
 
-go 1.24.1
+go 1.24.6
 
 require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
