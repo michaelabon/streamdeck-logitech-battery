@@ -37,7 +37,7 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
         with:
-          version: v2.0.2
+          version: v2.3.1
           working-directory: "./go"
           only-new-issues: true
   build:
